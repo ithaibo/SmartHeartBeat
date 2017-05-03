@@ -1,1 +1,1 @@
-include ':app', ':library', ':AndroidAsync'
+include ':app', ':AndroidAsync'

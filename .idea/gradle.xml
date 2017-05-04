@@ -10,6 +10,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/AndroidAsync" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/mina_push" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

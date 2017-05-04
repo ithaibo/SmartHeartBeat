@@ -1,1 +1,1 @@
-include ':app', ':AndroidAsync'
+include ':app', ':AndroidAsync', ':mina_push'

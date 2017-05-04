@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/AndroidAsync/AndroidAsync.iml" filepath="$PROJECT_DIR$/AndroidAsync/AndroidAsync.iml" />
       <module fileurl="file://$PROJECT_DIR$/SmartHeartBeat.iml" filepath="$PROJECT_DIR$/SmartHeartBeat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mina_push/mina_push.iml" filepath="$PROJECT_DIR$/mina_push/mina_push.iml" />
     </modules>
   </component>
 </project>

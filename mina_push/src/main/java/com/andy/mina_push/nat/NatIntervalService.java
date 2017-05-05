@@ -92,19 +92,6 @@ public class NatIntervalService extends Service implements PushEventListener {
         return Service.START_STICKY;
     }
 
-    //    @Override
-//    protected void onHandleIntent(@Nullable Intent intent) {
-//        if (intent.getAction().equals(ACTION_START_TRAIL)) {
-//            Log.i(this.getClass().getSimpleName(), "nat service started");
-//            natManager.openPush();
-//            natManager.setPushEventListener(this);
-//
-//            natManager.connect();
-//            while (true) {
-//            }
-//        }
-//    }
-
     @Override
     public void onPushConnected() {
         currState = NAT_INIT;

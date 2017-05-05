@@ -12,17 +12,19 @@ import android.view.View;
 import android.widget.Button;
 
 import com.alibaba.fastjson.JSON;
+import com.andy.mina_push.service.PushService;
+import com.andy.mina_push.util.LocalBroadcastUtils;
 import com.andy.smartheartbeat.msg.Msg;
 import com.andy.smartheartbeat.msg.MsgType;
 import com.koushikdutta.async.AsyncServer;
 import com.koushikdutta.async.AsyncSocket;
 import com.koushikdutta.async.ByteBufferList;
 import com.koushikdutta.async.DataEmitter;
-import com.koushikdutta.async.Util;
 import com.koushikdutta.async.callback.CompletedCallback;
 import com.koushikdutta.async.callback.ConnectCallback;
 import com.koushikdutta.async.callback.DataCallback;
 import com.koushikdutta.async.callback.WritableCallback;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private final String TAG = "SocketService";
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_connect:
-                connect();
+//                connect();
                 break;
             case R.id.btn_send_heart_beat:
 //                sendMsgHearBeat();
@@ -131,14 +133,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     };
 
     private void sendMsg2Server(final Msg msg2Send) {
-        MsgSendUtil.sendMsg(msg2Send, socket, new CompletedCallback() {
-            @Override
-            public void onCompleted(Exception ex) {
-                if (ex !=null) {
-                    Log.e(TAG, ex.getMessage());
-                }
-            }
-        });
+
+        Intent intent = new Intent();
+        intent.setAction(PushService.ACTION_PUSH_MSG_2_SERVER);
+        Bundle dataBundle = new Bundle();
+        dataBundle.putSerializable("msg", msg2Send);
+        intent.putExtra("data", dataBundle);
+
+        lbm.sendBroadcast(intent);
+
+        LocalBroadcastUtils.sendLocalBroadMsg(msg2Send, MainActivity.this, PushService.ACTION_PUSH_MSG_2_SERVER);
     }
 
     private void connect() {
@@ -156,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void sendMsgLocation() {
         Msg msg = new Msg();
-        msg.setMsgType(MsgType.MSG_LOCATION_SERVER_ACK);
+        msg.setMsgType(MsgType.MSG_LOCATION_POST);
         sendMsg2Server(msg);
         System.out.println("location post----------");
     }

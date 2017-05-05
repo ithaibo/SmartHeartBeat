@@ -2,9 +2,30 @@
 
     package="com.andy.mina_push">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">
 
+        <!--NAT时间-->
+        <receiver android:name=".service.PushService$NatIntervalReceiver">
+            <intent-filter>
+                <action android:name="com.ithaibo.heart_beat.interval"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".service.PushService$MsgEmitterReceiver">
+            <intent-filter>
+                <action android:name="com.ithaibo.msg.emitter"/>
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".nat.NatIntervalService">
+            <intent-filter>
+                <action android:name="com.ithaibo.START_TRAIL"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

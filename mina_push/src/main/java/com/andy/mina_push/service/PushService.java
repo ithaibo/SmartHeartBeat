@@ -14,16 +14,20 @@ import com.andy.mina_push.msg.Msg;
 import com.andy.mina_push.msg.MsgType;
 import com.andy.mina_push.push.PushEventListener;
 import com.andy.mina_push.push.PushManager;
+import com.andy.mina_push.util.LocalBroadcastUtils;
 
 import org.apache.mina.core.session.IoSession;
 
 
 public class PushService extends Service implements PushEventListener {
+    public static final String ACTION_PUSH_MSG_2_SERVER = "com.ithaibo.msg.emitter";
+    public static final String ACTION_NAT_INTERVAL = "com.ithaibo.heart_beat.interval";
+
     private final String TAG = this.getClass().getSimpleName();
 
     PushManager pushManager = PushManager.getInstance(this);
     MsgEmitterReceiver msgEmitterReceiver;
-    private LocalBroadcastManager lbm;
+    private NatIntervalReceiver natReceiver;
 
     @Override
     public void onCreate() {
@@ -31,8 +35,11 @@ public class PushService extends Service implements PushEventListener {
         super.onCreate();
 
         msgEmitterReceiver = new MsgEmitterReceiver();
-        lbm = LocalBroadcastManager.getInstance(this);
-        lbm.registerReceiver(msgEmitterReceiver, new IntentFilter("com.ithaibo.msg.emitter"));
+        LocalBroadcastUtils.registerLBReceiver(msgEmitterReceiver, ACTION_PUSH_MSG_2_SERVER, PushService.this);
+
+        natReceiver = new NatIntervalReceiver();
+        LocalBroadcastUtils.registerLBReceiver(natReceiver, ACTION_NAT_INTERVAL, PushService.this);
+
         pushManager.openPush();
         pushManager.setPushEventListener(this);
     }
@@ -56,7 +63,8 @@ public class PushService extends Service implements PushEventListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        lbm.unregisterReceiver(msgEmitterReceiver);
+        LocalBroadcastUtils.unregisterLBReceiver(msgEmitterReceiver, PushService.this);
+        LocalBroadcastUtils.unregisterLBReceiver(natReceiver, PushService.this);
 
         pushManager.disConnect();
     }
@@ -95,8 +103,7 @@ public class PushService extends Service implements PushEventListener {
     public class MsgEmitterReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Bundle msgBundle = intent.getBundleExtra("data");
-            Msg msg = (Msg) msgBundle.getSerializable("msg");
+            Msg msg = (Msg) intent.getSerializableExtra("data");
             if (msg.getMsgType() == MsgType.MSG_HEART_BEAT) {
                 Log.i(TAG, "change the hear beat interval to 30 seconds");
                 pushManager.setHeartBeatInterval(1*30);
@@ -104,6 +111,16 @@ public class PushService extends Service implements PushEventListener {
                 pushManager.sendMessage(msg);
             }
 
+        }
+    }
+
+    public class NatIntervalReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int interval = intent.getIntExtra("interval", 0);
+            if (pushManager!=null && interval > 0) {
+                pushManager.setHeartBeatInterval(interval);
+            }
         }
     }
 }

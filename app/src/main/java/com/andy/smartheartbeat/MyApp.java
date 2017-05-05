@@ -12,8 +12,9 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        Intent intent = new Intent(this, PushService.class);
-//        startService(intent);
-        NatIntervalService.starNatTrail(getApplicationContext());
+
+        AlarmManagerUtil.addAlarmService(getApplicationContext(),
+                NatIntervalService.class,
+                NatIntervalService.ACTION_START_TRAIL);
     }
 }

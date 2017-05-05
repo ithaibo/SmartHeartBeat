@@ -53,7 +53,7 @@ public class NatIntervalService extends Service implements PushEventListener {
     private int countDownFail = 5; //TODO need to set
     private int countDownCredit = 3; //TODO need to set
 
-    private static final String ACTION_START_TRAIL = "com.ithaibo.START_TRAIL";
+    public static final String ACTION_START_TRAIL = "com.ithaibo.START_TRAIL";
 
     private boolean isSuicide = false;
 
@@ -70,15 +70,12 @@ public class NatIntervalService extends Service implements PushEventListener {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        natManager = NatManager.getInstance(NatIntervalService.this);
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent.getAction().equals(ACTION_START_TRAIL)) {
             Log.i(this.getClass().getSimpleName(), "nat service started");
+            if (natManager == null){
+                natManager = NatManager.getInstance(NatIntervalService.this);
+            }
             natManager.openPush();
             natManager.setPushEventListener(this);
 

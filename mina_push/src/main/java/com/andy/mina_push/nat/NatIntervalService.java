@@ -63,10 +63,6 @@ public class NatIntervalService extends Service implements PushEventListener {
         context.startService(intent);
     }
 
-//    public NatIntervalService(){
-//        super(ACTION_START_TRAIL);
-//    }
-
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

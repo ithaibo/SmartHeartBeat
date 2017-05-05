@@ -11,5 +11,5 @@
 
 该项目使用了[Apatch mina](http://mina.apache.org/)。
 
-心跳Interval试探实现在[NatIntervalService](mina_push/nat/NatIntervalService.java)
+心跳Interval试探实现在[NatIntervalService](mina_push/src/main/java/com/andy/mina_push/nat/NatIntervalService.java)
 

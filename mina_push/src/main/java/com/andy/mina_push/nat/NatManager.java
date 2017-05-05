@@ -128,6 +128,7 @@ public class NatManager {
         try {
             return futureTask.get();
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
 
@@ -144,9 +145,9 @@ public class NatManager {
         if (connectFuture != null && connectFuture.isConnected()) {
             connectFuture.cancel();
         }
-        if (connector != null && !connector.isDisposed()) {
-            connector.dispose();
-        }
+//        if (connector != null && !connector.isDisposed()) {
+//            connector.dispose();
+//        }
     }
 
     public NioSocketConnector getConnector() {

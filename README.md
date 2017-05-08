@@ -13,3 +13,14 @@
 
 心跳Interval试探实现在[NatIntervalService](mina_push/src/main/java/com/andy/mina_push/nat/NatIntervalService.java)
 
+## Skill stack
+ - Service
+ - AlarmManager
+ - Apache MINA
+
+## 业务简介
+ - 使用Apache MINA建立TCP通道
+    Apache MINA基于NIO实现，封装良好
+    
+ - 设计了心跳间隔探测算法
+    通过AlarmManager设置定时任务，启动NatIntervalService执行心跳最大间隔探测算法。

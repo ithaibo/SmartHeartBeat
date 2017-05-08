@@ -3,16 +3,13 @@ package com.andy.mina_push.nat;
 import android.content.Context;
 import android.util.Log;
 
-import com.andy.mina_push.msg.Msg;
 import com.andy.mina_push.push.ClientKeepAliveMessageFactoryImp;
 import com.andy.mina_push.push.ClientSessionHandler;
 import com.andy.mina_push.push.Config;
 import com.andy.mina_push.push.PushEventListener;
-import com.andy.mina_push.push.PushManager;
 import com.andy.mina_push.util.NetworkUtil;
 
 import org.apache.mina.core.future.ConnectFuture;
-import org.apache.mina.core.future.WriteFuture;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolCodecFilter;
@@ -116,7 +113,7 @@ public class NatManager {
                             Config.HOSTNAME, Config.PORT));
                     connectFuture.awaitUninterruptibly();
                     session = connectFuture.getSession();
-                    Log.i(this.getClass().getSimpleName(), "manager connect" + android.os.Process.myPid() + '-' + android.os.Process.myTid());
+                    Log.i(TAG, "manager connect" + android.os.Process.myPid() + '-' + android.os.Process.myTid());
                 } catch (Exception e) {
                     return false;
                 }
@@ -150,13 +147,14 @@ public class NatManager {
 //        }
     }
 
-    public NioSocketConnector getConnector() {
-        return connector;
-    }
-
     public void setInterval(int interval) {
-        if (keepAliveFilter !=null) {
-            keepAliveFilter.setRequestInterval(interval);
+        if (session == null || !session.isConnected() || !connector.isActive()) {
+            return;
         }
+        if (keepAliveFilter == null) {
+            return;
+        }
+
+        keepAliveFilter.setRequestInterval(interval);
     }
 }

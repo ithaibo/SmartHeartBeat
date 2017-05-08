@@ -161,9 +161,6 @@ public class PushManager {
         if (connectFuture != null && connectFuture.isConnected()) {
             connectFuture.cancel();
         }
-        if (connector != null && !connector.isDisposed()) {
-            connector.dispose();
-        }
     }
 
     public void reConnect() {

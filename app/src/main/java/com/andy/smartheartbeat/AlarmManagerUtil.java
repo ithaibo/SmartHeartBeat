@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import android.util.Log;
 
 /**
  * Created by Andy on 2017/5/5.
@@ -13,7 +14,7 @@ import android.text.TextUtils;
 
 public class AlarmManagerUtil {
 
-    public static void addAlarmService(Context context, Class<?> cls, String action) {
+    public static void addAlarmTask(Context context, Class<?> cls, String action) {
         if (context == null){
             return;
         }
@@ -21,6 +22,13 @@ public class AlarmManagerUtil {
             return;
         }
         if (TextUtils.isEmpty(action)) {
+            return;
+        }
+
+        if (isTaskExistedInAmarmManager(context, action)){
+            //alarm existed
+            Log.i(AlarmManagerUtil.class.getSimpleName(),
+                    "an alarm with action, " + action + " is existed.");
             return;
         }
 
@@ -36,5 +44,13 @@ public class AlarmManagerUtil {
         long interval = 3 * 60 *1000;
 
         am.setRepeating(AlarmManager.ELAPSED_REALTIME, triggerTime, interval, pendingIntent);
+    }
+
+    public static boolean isTaskExistedInAmarmManager(Context context, String action) {
+        boolean existed =  null!= PendingIntent.getService(context, 0,
+                new Intent(action),
+                PendingIntent.FLAG_NO_CREATE);
+
+        return existed;
     }
 }

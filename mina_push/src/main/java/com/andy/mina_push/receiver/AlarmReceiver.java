@@ -7,7 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.andy.mina_push.service.PushService;
-import com.andy.mina_push.util.Constant;
+import com.andy.mina_push.util.Constants;
 import com.andy.mina_push.util.NetworkUtil;
 
 
@@ -20,17 +20,17 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
     	String action = intent.getAction();
     	Log.d(TAG, "alarm receiver action : " + action);
-    	if(TextUtils.equals(action, Constant.PPLINK_HEART_BEAT_MODE)){
+    	if(TextUtils.equals(action, Constants.PPLINK_HEART_BEAT_MODE)){
 			if (!NetworkUtil.isNetworkConnect(context)) {
 				Log.e(TAG, "AlarmReceiver--网络未连接");
 				return;
 			}
 	        Intent pushService = new Intent(context, PushService.class);
 	        context.startService(pushService);
-    	}else if(TextUtils.equals(action, Constant.PPLINK_ALARM_OFF)){
+    	}else if(TextUtils.equals(action, Constants.PPLINK_ALARM_OFF)){
     		Intent pushService = new Intent(context, PushService.class);
 	        context.startService(pushService);
-    	}else if(TextUtils.equals(action, Constant.PPLINK_ALARM_ON)){
+    	}else if(TextUtils.equals(action, Constants.PPLINK_ALARM_ON)){
     		Intent pushService = new Intent(context, PushService.class);
 	        context.startService(pushService);
     	}

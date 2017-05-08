@@ -1,7 +1,6 @@
 package com.andy.smartheartbeat;
 
 import android.app.Application;
-
 import com.andy.mina_push.nat.NatIntervalService;
 
 /**
@@ -12,9 +11,5 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        AlarmManagerUtil.addAlarmService(getApplicationContext(),
-                NatIntervalService.class,
-                NatIntervalService.ACTION_START_TRAIL);
     }
 }

@@ -19,7 +19,7 @@ public class Config {
     /**
      * 长连接心跳包发送频率，10 seconds
      */
-    public static final int KEEP_ALIVE_TIME_INTERVAL = 10;
+    public static final int KEEP_ALIVE_TIME_INTERVAL = 1;
     /**
      * 长连接心跳包应答超时
      */

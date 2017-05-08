@@ -4,7 +4,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.nfc.Tag;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -76,7 +75,7 @@ public class NatIntervalService extends Service implements PushEventListener {
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        long timeNow = calendar.getTimeInMillis();
+        long timeNow = DateUtils.getTimeMilisGMT8();
 
         Log.i(TAG, "time now: " + timeNow);
         Log.i(TAG, "time last nat: " + lastNatTime);
@@ -207,7 +206,7 @@ public class NatIntervalService extends Service implements PushEventListener {
         //save time to SharedPreference
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8"));
-        long time2Save = calendar.getTimeInMillis();
+        long time2Save = DateUtils.getTimeMilisGMT8();
 
         synchronized (this) {
             SharedPreferences sp = getSharedPreferences(Constants.NAME_SP_NAT, MODE_PRIVATE);

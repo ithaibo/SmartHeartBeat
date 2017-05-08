@@ -8,6 +8,9 @@ import java.io.Serializable;
 
 public class Msg implements Serializable {
     private int msgType;
+    private String ticket;
+    private String sign;
+
     private String msgData;
 
     public int getMsgType() {
@@ -16,6 +19,22 @@ public class Msg implements Serializable {
 
     public void setMsgType(int msgType) {
         this.msgType = msgType;
+    }
+
+    public String getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
     }
 
     public String getMsgData() {

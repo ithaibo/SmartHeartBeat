@@ -22,6 +22,6 @@ public class Constants {
     public static final String NAME_SP_NAT = "NAT_RECORD";
     /**相邻两次NAT试探周期   (默认为1周)*/
 //    public static final long VALID_NAT_TRACE_PEROID = 24 * 60 * 60 * 1000L;
-    public static final long VALID_NAT_TRACE_PEROID = 3 * 60 * 1000L;
+    public static final long VALID_NAT_TRACE_PEROID = 1 * 60 * 1000L;
     //-----------NAT ABOUT----------------------------
 }

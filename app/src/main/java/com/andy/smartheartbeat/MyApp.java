@@ -1,7 +1,6 @@
 package com.andy.smartheartbeat;
 
 import android.app.Application;
-import com.andy.mina_push.nat.NatIntervalService;
 
 /**
  * Created by Andy on 2017/5/5.
